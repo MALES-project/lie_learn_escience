@@ -1,0 +1,49 @@
+name: "Test Build with Python 3.14"
+
+on:
+  push:
+    branches: [ master, test ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  test_build_python_314:
+    name: Test build on Python 3.14 (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.14
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+          allow-prereleases: true
+
+      - name: Install build dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install build setuptools wheel cython numpy
+
+      - name: Build package
+        run: |
+          python -m build
+
+      - name: Install package
+        run: |
+          pip install dist/*.whl
+
+      - name: Test import
+        run: |
+          python -c "import lie_learn; print('lie_learn imported successfully')"
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifacts-python314-${{ matrix.os }}
+          path: dist/

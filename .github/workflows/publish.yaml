@@ -34,7 +34,7 @@ jobs:
           CIBW_SKIP: "*_i686 *-musllinux_*"
       - uses: actions/upload-artifact@v4
         with:
-          name: lie_learn-${{ matrix.os }}-${{ strategy.job-index }}
+          name: lie_learn_escience-${{ matrix.os }}-${{ strategy.job-index }}
           path: ./dist/*.whl
 
       - name: Publish package
