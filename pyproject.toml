@@ -10,7 +10,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "lie_learn_escience"
-version = "0.0.3"
+version = "0.0.4"
 description = "A python package that knows how to do various tricky computations related to Lie groups and manifolds (mainly the sphere S2 and rotation group SO3)."
 readme = "README.md"
 license = {file = "LICENSE"}
